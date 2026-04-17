@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Zero 進化の全記録 v0.9→v1.9</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #000; color: #fff; font-family: monospace; overflow-x: hidden; }
+  canvas#matrix { position: fixed; top: 0; left: 0; z-index: 0; opacity: 0.15; pointer-events: none; }
+  .content { position: relative; z-index: 1; }
+
+  .cover {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 100vh; text-align: center; padding: 40px 20px;
+  }
+  .cover-label { font-size: 13px; color: #00ff41; letter-spacing: 6px; margin-bottom: 16px; }
+  .cover-title { font-size: clamp(32px, 6vw, 80px); font-weight: 900; line-height: 1.1; margin-bottom: 20px; text-shadow: 0 0 30px #00ff41; }
+  .cover-title .green { color: #00ff41; }
+  .cover-sub { font-size: clamp(13px, 2vw, 18px); color: #aaa; line-height: 2; margin-bottom: 32px; }
+  .tags { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-bottom: 48px; }
+  .tag { font-size: 12px; color: #00ff41; border: 1px solid #00ff41; padding: 4px 14px; }
+  .scroll-hint { font-size: 12px; color: #444; animation: pulse 2s infinite; }
+
+  .chapter-slide {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 60vh; text-align: center; padding: 60px 20px;
+  }
+  .ch-num-bg { font-size: clamp(80px, 15vw, 160px); font-weight: 900; opacity: 0.1; line-height: 1; margin-bottom: -30px; }
+  .ch-label { font-size: 14px; letter-spacing: 5px; margin-bottom: 16px; }
+  .ch-title { font-size: clamp(18px, 3.5vw, 40px); font-weight: 700; line-height: 1.4; max-width: 800px; }
+  .ch-line { width: 80px; height: 2px; margin: 24px auto 0; }
+
+  .body-slide { padding: 60px clamp(24px, 8vw, 120px); }
+  .body-line { width: 40px; height: 2px; margin-bottom: 32px; }
+  .body-slide p { font-size: clamp(14px, 2vw, 19px); line-height: 1.9; margin-bottom: 16px; color: #ccc; }
+  .body-slide p.h { font-weight: 700; font-size: clamp(15px, 2.2vw, 21px); color: #fff; }
+  .body-slide p.q { font-style: italic; border-left-width: 3px; border-left-style: solid; padding-left: 20px; }
+
+  /* RESOURCE BAR */
+  .resource-bar {
+    background: #0a0a0a; border-top: 1px solid #1a1a1a;
+    padding: 48px clamp(24px, 8vw, 120px);
+  }
+  .resource-bar h3 { font-size: 13px; color: #00ff41; letter-spacing: 4px; margin-bottom: 28px; }
+  .resource-links { display: flex; flex-wrap: wrap; gap: 16px; }
+  .res-link {
+    display: flex; align-items: center; gap: 10px;
+    background: #111; border: 1px solid #222; padding: 12px 20px;
+    text-decoration: none; color: #ccc; font-size: 13px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .res-link:hover { border-color: #00ff41; color: #00ff41; }
+  .res-link .icon { font-size: 16px; }
+  .res-link .label { font-size: 11px; color: #555; display: block; margin-bottom: 2px; }
+  .res-link .name { font-size: 13px; }
+
+  .footer { padding: 40px; text-align: center; border-top: 1px solid #0a0a0a; }
+  .footer p { font-size: 11px; color: #2a2a2a; line-height: 1.8; }
+
+  @keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #000; }
+  ::-webkit-scrollbar-thumb { background: #00ff41; }
+</style>
+</head>
+<body>
+<canvas id="matrix"></canvas>
+<div class="content">
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-label">AGENT ZERO // EVOLUTION LOG</div>
+  <h1 class="cover-title"><span class="green">Agent Zero</span><br>進化の全記録</h1>
+  <div class="cover-sub">v0.9 → v1.9 &nbsp;|&nbsp; <span style="color:#00ff41">2025年6月 〜 2026年4月</span></div>
+  <div class="tags">
+    <div class="tag">Plugin Hub</div>
+    <div class="tag">A0 CLI Connector</div>
+    <div class="tag">Skills System</div>
+    <div class="tag">Multi-Agent</div>
+  </div>
+  <div class="scroll-hint">SCROLL TO CONTINUE ▼</div>
+</div>
+
+<!-- CH01 -->
+<div class="chapter-slide">
+  <div class="ch-num-bg" style="color:#00ff41">01</div>
+  <div class="ch-label" style="color:#00ff41">CHAPTER 01</div>
+  <h2 class="ch-title" style="text-shadow:0 0 20px #00ff41">v0.9系 — シームレスな操作の幕開け</h2>
+  <div class="ch-line" style="background:#00ff41;box-shadow:0 0 10px #00ff41"></div>
+</div>
+<div class="body-slide">
+  <div class="body-line" style="background:#00ff41;box-shadow:0 0 8px #00ff41"></div>
+  <p class="h" style="color:#00ff41">v0.9.0「Backup &amp; Subordinate Agent Profiles」— 2025年6月26日</p>
+  <p>0.9シリーズは「シームレスな操作」をテーマに始動。完全バックアップ＆リストアシステムを導入し、アップグレードが劇的に安全になった。サブエージェントに専用プロンプトプロファイルを持たせることが可能になり、マルチエージェントの設計が本格化した。</p>
+  <p class="h" style="color:#00ff41">v0.9.1「LiteLLM Integration &amp; UI Overhaul」— 2025年7月7日</p>
+  <p>LangchainをLiteLLMに完全置換し、統一された多プロバイダーサポートを実現。UIも大幅に刷新され、折りたたみ式メッセージグループ、モバイル最適化デザインが登場した。</p>
+  <p class="h" style="color:#00ff41">v0.9.2「Speech &amp; Attachments」— 2025年7月21日</p>
+  <p>Kokoro TTSとWhisper音声認識による完全な音声インタラクションが実現。Agent Zeroが「耳と口」を得た瞬間だ。</p>
+  <p class="h" style="color:#00ff41">v0.9.3〜v0.9.5 — メモリ・A2A・シークレット管理</p>
+  <p>サブエージェントの専用プロンプト拡張、Agent-to-Agentプロトコル、LLMにAPIキーを晒さないシークレット管理、PWA対応と、矢継ぎ早に機能が追加された。</p>
+  <p class="h" style="color:#00ff41">v0.9.6「Memory Management Dashboard」— 2025年10月2日</p>
+  <p>エージェントの記憶を透明に管理するダッシュボードが登場。何を覚えているか、何を忘れさせるか——ユーザーが完全コントロールできるようになった。</p>
+  <p class="h" style="color:#00ff41">v0.9.7「Projects Management System」— 2025年11月19日</p>
+  <p>プロジェクトごとにカスタム指示・メモリ・ナレッジ・ファイル・シークレットを分離管理できるようになった。新しいウェルカムダッシュボードとWaitツールでエージェント制御も向上した。</p>
+</div>
+
+<!-- CH02 -->
+<div class="chapter-slide">
+  <div class="ch-num-bg" style="color:#00cfff">02</div>
+  <div class="ch-label" style="color:#00cfff">CHAPTER 02</div>
+  <h2 class="ch-title" style="text-shadow:0 0 20px #00cfff">v0.9.8 — Agent Zero史上最大のリリース</h2>
+  <div class="ch-line" style="background:#00cfff;box-shadow:0 0 10px #00cfff"></div>
+</div>
+<div class="body-slide">
+  <div class="body-line" style="background:#00cfff;box-shadow:0 0 8px #00cfff"></div>
+  <p class="q" style="color:#00cfff;border-color:#00cfff">2026年2月——開発チーム自らが「史上最大のリリース」と呼ぶv0.9.8が降臨した。</p>
+  <p class="h">17の新機能・13の改善・37のバグ修正。ほぼすべてのコンポーネントに触れた全面刷新だ。</p>
+  <p class="h" style="color:#00cfff">最大の変革：Skillsシステムの導入</p>
+  <p>従来のInstrumentsシステムを完全置換し、SKILL.md標準に基づいた構造化・ポータブルなエージェント能力が定義可能に。このSKILL.md標準はAnthropicが開発したオープン標準で、Claude Code・Cursor・Goose・OpenAI Codex CLI・GitHub Copilotとも互換性を持つ。</p>
+  <p class="h" style="color:#00cfff">リアルタイムWebSocket基盤</p>
+  <p>ポーリング方式を廃止しWebSocketによるリアルタイム状態同期を実装。UIも全面再設計でプロセスグループの視覚化・タイムスタンプ・実行時間バッジが追加された。</p>
+  <p class="h" style="color:#00cfff">Git・ファイルエディタ・新プロバイダー4社</p>
+  <p>Gitベースのプロジェクト管理、ブラウザ内ファイルエディタ、メッセージキューシステムを実装。CometAPI・Z.AI・Moonshot AI・AWS Bedrockの4社を追加。Microsoft Dev Tunnelsによるセキュアなリモートアクセスも実現した。</p>
+  <p class="q" style="color:#00cfff;border-color:#00cfff">v0.9.8はAgent Zeroが「プロトタイプ」から「本格的なプロダクション基盤」へ脱皮した瞬間だった。</p>
+</div>
+
+<!-- CH03 -->
+<div class="chapter-slide">
+  <div class="ch-num-bg" style="color:#ff6b35">03</div>
+  <div class="ch-label" style="color:#ff6b35">CHAPTER 03</div>
+  <h2 class="ch-title" style="text-shadow:0 0 20px #ff6b35">v1.1 — プラグイン革命</h2>
+  <div class="ch-line" style="background:#ff6b35;box-shadow:0 0 10px #ff6b35"></div>
+</div>
+<div class="body-slide">
+  <div class="body-line" style="background:#ff6b35;box-shadow:0 0 8px #ff6b35"></div>
+  <p class="h" style="color:#ff6b35">2026年3月26日——v1.1「Plugin Platform &amp; Plugin Hub」</p>
+  <p>フルプラグインプラットフォームの立ち上げにより、開発者がコアリリースとは独立して機能を提供できるようになった。プロンプト・ツール・プロバイダー・API・フック——あらゆるレイヤーが拡張可能になった。</p>
+  <p class="h" style="color:#ff6b35">Plugin Hub——まるでApp Store</p>
+  <p>プラグインの発見・インストール・検証・設定がUI上で完結。ビルトインプラグインとしてEmailとTelegram通信プラグインが搭載され、チャットごとのモデル切り替えも可能になった。</p>
+  <p class="q" style="color:#ff6b35;border-color:#ff6b35">コミュニティリポジトリ「a0-plugins」も公開。開発者がPRを出せばPlugin Hubに掲載してもらえる仕組みが整った。</p>
+</div>
+
+<!-- CH04 -->
+<div class="chapter-slide">
+  <div class="ch-num-bg" style="color:#b44fff">04</div>
+  <div class="ch-label" style="color:#b44fff">CHAPTER 04</div>
+  <h2 class="ch-title" style="text-shadow:0 0 20px #b44fff">v1.2〜v1.6 — 高速進化の連打</h2>
+  <div class="ch-line" style="background:#b44fff;box-shadow:0 0 10px #b44fff"></div>
+</div>
+<div class="body-slide">
+  <div class="body-line" style="background:#b44fff;box-shadow:0 0 8px #b44fff"></div>
+  <p class="h" style="color:#b44fff">v1.2「Plugin Installer &amp; Release Workflow」— 3月26日</p>
+  <p>決定論的なプラグインインデックス更新制御を追加。Dockerリリースノートを動的なOpenRouter生成に切り替えた。</p>
+  <p class="h" style="color:#b44fff">v1.3「Chat Compaction &amp; WebUI Extension Points」— 3月27日</p>
+  <p>ビルトインのチャット圧縮プラグインを導入。長い会話のコンテキストを自動的に圧縮し、コスト削減とパフォーマンス向上を両立させた。</p>
+  <p class="h" style="color:#b44fff">v1.4「Onboarding, Plugin Hub &amp; Model Config」— 3月30日</p>
+  <p>APIキー未設定時の初回オンボーディングフローが登場。チャット入力のモデルプリセットスイッチャーも実装された。</p>
+  <p class="h" style="color:#b44fff">v1.5「WebSocket System Rework」— 3月30日</p>
+  <p>WebSocketシステムを大規模リライト。ルーティングとバッファリングの新アーキテクチャでリアルタイム通信の安定性が大幅向上した。</p>
+  <p class="h" style="color:#b44fff">v1.6「WhatsApp Integration」— 4月1日</p>
+  <p>WhatsAppインテグレーションプラグインが登場。AIエージェントをWhatsAppから操作できるようになった。</p>
+</div>
+
+<!-- CH05 -->
+<div class="chapter-slide">
+  <div class="ch-num-bg" style="color:#00ff41">05</div>
+  <div class="ch-label" style="color:#00ff41">CHAPTER 05</div>
+  <h2 class="ch-title" style="text-shadow:0 0 20px #00ff41">v1.7〜v1.8 — 知性の洗練</h2>
+  <div class="ch-line" style="background:#00ff41;box-shadow:0 0 10px #00ff41"></div>
+</div>
+<div class="body-slide">
+  <div class="body-line" style="background:#00ff41;box-shadow:0 0 8px #00ff41"></div>
+  <p class="h" style="color:#00ff41">v1.7「Prompt Guidance Overhaul, Streaming Tool Dispatch」— 4月3日</p>
+  <p>プロンプトスタックをコンパクト化し、ガードレールを追加。部分的なストリームからのツール早期ディスパッチを実装することで、レスポンスを待たずにツール実行が始まる高速化を実現した。</p>
+  <p class="h" style="color:#00ff41">v1.8「Built-in Skills Selector, Memory Hardening」— 4月8日</p>
+  <p>チャット入力からスキルを直接ブラウズ・アクティベートできるビルトインSkills Selectorが登場。文脈に応じたスキルの即時選択が可能になった。メモリの整合性・フィルタリング強化も実施。</p>
+</div>
+
+<!-- CH06 -->
+<div class="chapter-slide">
+  <div class="ch-num-bg" style="color:#00cfff">06</div>
+  <div class="ch-label" style="color:#00cfff">CHAPTER 06</div>
+  <h2 class="ch-title" style="text-shadow:0 0 20px #00cfff">v1.9 — A0 CLI Connector、最前線へ</h2>
+  <div class="ch-line" style="background:#00cfff;box-shadow:0 0 10px #00cfff"></div>
+</div>
+<div class="body-slide">
+  <div class="body-line" style="background:#00cfff;box-shadow:0 0 8px #00cfff"></div>
+  <p class="h" style="color:#00cfff">2026年4月13日——v1.9「Security Hardening, A0 CLI Connector, &amp; Messaging UX Refresh」</p>
+  <p>最も注目すべきは「A0 CLI Connector」の登場だ。Agent ZeroはDockerコンテナの中で動くサンドボックス環境だが、A0 CLIはその壁を突き破り、ホストマシン（あなたのPC）への直接アクセスを可能にする。</p>
+  <p class="h" style="color:#00cfff">A0 CLI Connectorができること</p>
+  <p>HTTPとWebSocketで認証済み接続を確立。ホストマシン上のファイルを直接閲覧・編集でき、コードをホスト側で実行し、ファイルツリーをブリッジできる。Agent ZeroがついにあなたのPCそのものを操作できるようになった。</p>
+  <p class="h" style="color:#00cfff">セキュリティ強化</p>
+  <p>2つの重大な脆弱性を修正。document_queryのリモートフェッチにSSRF防御を実装し、download_work_dir_fileにパストラバーサル防御を追加した。</p>
+  <p class="h" style="color:#00cfff">メッセージング統合の完成</p>
+  <p>Telegram・WhatsApp・メールスレッドに/project・/config・/send・/queue sendなどのネイティブチャットコマンドが統一実装された。</p>
+  <p class="q" style="color:#00cfff;border-color:#00cfff">v1.9は「セキュリティ」「ホスト連携」「メッセージング統合」——3つの柱が揃ったマイルストーンリリースだ。</p>
+</div>
+
+<!-- CH07 -->
+<div class="chapter-slide">
+  <div class="ch-num-bg" style="color:#ff6b35">07</div>
+  <div class="ch-label" style="color:#ff6b35">CHAPTER 07</div>
+  <h2 class="ch-title" style="text-shadow:0 0 20px #ff6b35">Agent Zero CLI — ホストマシンへの扉</h2>
+  <div class="ch-line" style="background:#ff6b35;box-shadow:0 0 10px #ff6b35"></div>
+</div>
+<div class="body-slide">
+  <div class="body-line" style="background:#ff6b35;box-shadow:0 0 8px #ff6b35"></div>
+  <p class="h" style="color:#ff6b35">A0 CLI——サンドボックスの外へ</p>
+  <p>通常のAgent ZeroはDockerコンテナ内のサンドボックスで動作する。A0 CLIはそのAgent Zeroインスタンスに認証済みHTTP/WebSocket接続し、ホストマシンとの橋渡しをする役割を担う。</p>
+  <p class="h" style="color:#ff6b35">できること</p>
+  <p>・ホストマシン上のファイルを直接閲覧・編集（コンテナ外のファイルにアクセス）<br>
+  ・ホスト側でのコード実行（サンドボックスの制限を超えた処理）<br>
+  ・ファイルツリーのブリッジング（Agent ZeroとホストPCのファイル空間を接続）<br>
+  ・ログストリーミング・リモートエディット・ケイパビリティディスカバリー</p>
+  <p class="q" style="color:#ff6b35;border-color:#ff6b35">SKILL.md標準に準拠しているため、Claude Code・Cursor・Goose・OpenAI Codex CLI・GitHub Copilotとも互換性がある。Agent ZeroがAIエコシステム全体と接続するオープンな存在になった瞬間だ。</p>
+</div>
+
+<!-- CH08 -->
+<div class="chapter-slide">
+  <div class="ch-num-bg" style="color:#b44fff">08</div>
+  <div class="ch-label" style="color:#b44fff">CHAPTER 08</div>
+  <h2 class="ch-title" style="text-shadow:0 0 20px #b44fff">v0.9→v1.9 進化の全体像</h2>
+  <div class="ch-line" style="background:#b44fff;box-shadow:0 0 10px #b44fff"></div>
+</div>
+<div class="body-slide">
+  <div class="body-line" style="background:#b44fff;box-shadow:0 0 8px #b44fff"></div>
+  <p class="h" style="color:#b44fff">わずか10ヶ月でAgent Zeroが手に入れたもの</p>
+  <p>【記憶と管理】プロジェクト別メモリ・シークレット・ナレッジ管理。メモリダッシュボードによる完全な透明性と制御。</p>
+  <p>【スキルと拡張】SKILL.md標準による構造化スキル。Plugin HubとコミュニティプラグインによるApp Store的エコシステム。</p>
+  <p>【通信と統合】Email・Telegram・WhatsApp連携。ネイティブチャットコマンドによるメッセージアプリからの直接制御。</p>
+  <p>【ホスト連携】A0 CLIによるサンドボックスの壁を超えたホストマシン直接操作。</p>
+  <p>【セキュリティ】SSRF防御・パストラバーサル防御・CSRF対応・シークレットマスキング。</p>
+  <p class="h">Agent Zeroは今、単なるAIアシスタントを超えた存在になっている。</p>
+  <p>あなたのPCで動き、あなたの記憶を持ち、あなたのメッセージアプリに繋がり、コミュニティが育てたプラグインで無限に拡張される——パーソナルAIの理想形がここにある。</p>
+  <p class="q" style="color:#b44fff;border-color:#b44fff">v2.0は、どこへ向かうのか。その答えは、すでにコミュニティの中で育ちつつある。</p>
+</div>
+
+<!-- RESOURCE BAR -->
+<div class="resource-bar">
+  <h3>// RESOURCES &amp; LINKS</h3>
+  <div class="resource-links">
+    <a class="res-link" href="https://github.com/JunSuzuki1973/agent-zero-evolution" target="_blank">
+      <span class="icon">⌨</span>
+      <span><span class="label">このページのリポジトリ</span><span class="name">GitHub: agent-zero-evolution</span></span>
+    </a>
+    <a class="res-link" href="https://github.com/agent0ai/agent-zero" target="_blank">
+      <span class="icon">🤖</span>
+      <span><span class="label">Agent Zero 公式</span><span class="name">GitHub: agent0ai/agent-zero</span></span>
+    </a>
+    <a class="res-link" href="https://www.agent-zero.ai/p/docs/changelog/" target="_blank">
+      <span class="icon">📋</span>
+      <span><span class="label">Agent Zero 公式ドキュメント</span><span class="name">Changelog — agent-zero.ai</span></span>
+    </a>
+    <a class="res-link" href="https://github.com/agent0ai/a0-plugins" target="_blank">
+      <span class="icon">🧩</span>
+      <span><span class="label">コミュニティプラグイン</span><span class="name">GitHub: agent0ai/a0-plugins</span></span>
+    </a>
+    <a class="res-link" href="https://www.youtube.com/@AI-INFO-BIZ" target="_blank">
+      <span class="icon">▶</span>
+      <span><span class="label">YouTube チャンネル</span><span class="name">Generative AI and InfoBusiness Institute</span></span>
+    </a>
+    <a class="res-link" href="https://note.com/jun_suzuki1973" target="_blank">
+      <span class="icon">✍</span>
+      <span><span class="label">note.com</span><span class="name">Jun Suzuki — AIと情報ビジネス</span></span>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>AGENT ZERO EVOLUTION LOG &nbsp;|&nbsp; Researched &amp; Published by Jun Suzuki &nbsp;|&nbsp; 2026<br>
+  YouTube: <a href="https://www.youtube.com/@AI-INFO-BIZ" style="color:#333;text-decoration:none">@AI-INFO-BIZ</a> &nbsp;|&nbsp;
+  note: <a href="https://note.com/jun_suzuki1973" style="color:#333;text-decoration:none">note.com/jun_suzuki1973</a></p>
+</div>
+
+</div>
+
+<script>
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+const chars = 'アイウエオカキクケコサシスセソ01ABCDEF<>/\\|[]{}';
+let drops = [];
+function initDrops() { drops = Array(Math.floor(canvas.width / 20)).fill(1); }
+initDrops();
+window.addEventListener('resize', initDrops);
+function draw() {
+  ctx.fillStyle = 'rgba(0,0,0,0.05)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#00ff41';
+  ctx.font = '14px monospace';
+  drops.forEach((y, i) => {
+    ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * 20, y * 20);
+    if (y * 20 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+    drops[i]++;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
